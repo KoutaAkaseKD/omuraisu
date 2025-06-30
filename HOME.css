@@ -1,0 +1,313 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    /* フォントの指定: MS PゴシックはWindowsのみなので、ArialをFallbackに追加 */
+    font-family: 'MS PGothic', Arial, sans-serif;
+    /*コンテンツ全体の背景色*/
+    background-color: #F7FDFF;
+    color: #0f0f0f;
+}
+
+/* --- ヘッダーの基本設定 --- */
+header {
+    height: 60px;
+    width: 100%;
+    padding: 0 15px;
+    background-color: #77CBFC;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+}
+
+    /* ヘッダー内のul要素 */
+    header ul {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* ヘッダー内のナビゲーションリンクのスタイル (PC用) */
+    header a { /* header a に変更 */
+        color: #000000;
+        text-decoration: none;
+        display: block;
+        line-height: 60px; /* ヘッダーの高さに合わせる */
+        padding: 0 20px;
+        position: relative;
+        /* transition: background-color 0.3s ease; ← 背景色を変えないので不要 */
+    }
+
+        header a:hover {
+            /* ホバー時背景色はなし */
+            background-color: transparent; /* 明示的に透明に設定 */
+            color: #F7FDFF;
+        }
+
+        /* ヘッダー内のナビゲーションリンクのアンダーバーアニメーション (PC用) */
+        header a::after {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            content: '';
+            width: 100%;
+            height: 2px;
+            background: #F7FDFF; /* 下線の色 */
+            transform: scale(0, 1);
+            transform-origin: center top;
+            transition: transform 0.3s ease;
+        }
+
+        header a:hover::after { /* header a:hover::after に変更 */
+            transform: scale(1, 1);
+        }
+
+/* ロゴのスタイル調整 */
+.logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+    .logo img {
+        max-height: 40px;
+        width: auto;
+        vertical-align: middle;
+    }
+
+/* --- ロゴリンクのスタイル上書き --- */
+.logo-link {
+    /* デフォルトのaタグのスタイルをリセット */
+    line-height: normal; /* 画像の高さに合わせるためリセット */
+    padding: 0; /* パディングをリセット */
+    background-color: transparent; /* ホバー時の背景色を無効に */
+}
+
+    .logo-link:hover {
+        background-color: transparent; /* ホバー時の背景色を無効に */
+
+    }
+
+    .logo-link::after {
+        display: none; /* 下線を非表示に */
+    }
+
+    .logo-link:hover::after {
+        transform: scale(0, 1); /* 下線のアニメーションを無効に */
+    }
+/* --- ここまでロゴリンクのスタイル上書き --- */
+
+/*ナビ*/
+nav {
+    margin-left: auto; /* ヘッダー内で右寄せ */
+}
+
+/* --- フッターの基本設定 --- */
+footer {
+    width: 100%;
+    background-color: #f5f5f5;
+    color: #0f0f0f;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: auto; /* Sticky Footer用。bodyにflex設定が必要 */
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* 著作権情報の段落 */
+footer p {
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+/* フッター内のリンクリスト */
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 15px 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+    .footer-links li {
+        margin: 0 10px;
+    }
+
+    /* フッター内のリンクのスタイル (PC用) */
+    .footer-links a {
+        color: #0f0f0f; /* フッターのリンク色 */
+        text-decoration: none;
+        font-size: 15px;
+        position: relative; /* 下線のために必要 */
+        transition: color 0.3s ease; /* テキスト色変化用 */
+    }
+
+        .footer-links a:hover {
+            background-color: transparent; /* ホバー時の背景色を透明に */
+            color: #77CBFC; /* ホバー時にテキスト色を水色に */
+        }
+
+        /* フッター内のリンクの下線アニメーション (PC用) */
+        .footer-links a::after {
+            position: absolute;
+            bottom: -3px; /* 下線の位置を調整 */
+            left: 0;
+            content: '';
+            width: 100%;
+            height: 1px; /* 下線の太さ */
+            background: #000000; /* フッターリンクの下線の色 */
+            transform: scale(0, 1);
+            transform-origin: center top;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-links a:hover::after {
+            transform: scale(1, 1);
+        }
+
+
+/* --- ハンバーガーメニューアイコンの設定 (SP用) --- */
+.menu-toggle {
+    display: none; /* デフォルトは非表示 */
+    font-size: 30px;
+    cursor: pointer;
+    margin-left: auto; /* 右寄せ */
+    background: none;
+    border: none;
+    padding: 0;
+    color: #0f0f0f; /* アイコンの色 */
+}
+
+
+@media (max-width: 768px) {
+    /* --- ヘッダーの調整 --- */
+    header {
+        padding: 0 20px; /* スマホで左右のパディングを調整 */
+        justify-content: space-between; /* ロゴとハンバーガーアイコンを両端に */
+    }
+
+    /* ナビゲーションを非表示にし、ハンバーガーメニューで表示制御 */
+    nav {
+        display: none; /* デフォルトで非表示 */
+        flex-direction: column; /* 縦並び */
+        position: absolute; /* ヘッダーから切り離して配置 */
+        top: 60px; /* ヘッダーのすぐ下 */
+        left: 0;
+        width: 100%;
+        background-color: #77CBFC; /* メニュー展開時の背景色 */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        max-height: 0; /* 最初は高さを0にして非表示 */
+        overflow: hidden; /* はみ出したコンテンツを隠す */
+        transition: max-height 0.3s ease-out; /* スムーズな開閉アニメーション */
+    }
+
+        /* JavaScriptで 'active' クラスが追加された時に表示 */
+        nav.active {
+            display: flex; /* Flexboxで表示 */
+            max-height: 300px; /* メニューの高さに合わせて調整 */
+        }
+
+    /* header ul のレスポンシブ対応 */
+    header ul { /* header ul に変更 */
+        flex-direction: column; /* メニュー項目を縦並びに */
+        width: 100%;
+    }
+
+    /* ハンバーガーメニュー内の各リンクのスタイル (header a に変更) */
+    header a {
+        padding: 15px 20px; /* 上下のパディングを広げ、タップしやすく */
+        line-height: normal; /* 行高さをリセット */
+        text-align: center; /* 中央揃え */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* 区切り線 */
+        color: #fff; /* ハンバーガーメニュー内のリンク色を白に */
+    }
+
+    header ul li:last-child a { /* header ul li:last-child a に変更 */
+        border-bottom: none; /* 最後の項目は下線なし */
+    }
+
+    /* ハンバーガーメニュー内のリンクのホバー時背景色をなし */
+    header a:hover { /* header a:hover に変更 */
+        background-color: rgba(255, 255, 255, 0.1); /* 少しだけ透明な白を重ねる */
+    }
+
+    /* SP時はアンダーバーを非表示 */
+    header a::after { /* header a::after に変更 */
+        display: none;
+    }
+
+    header a:hover::after { /* header a:hover::after に変更 */
+        transform: scale(0, 1);
+    }
+
+    /* ハンバーガーメニューアイコンを表示 */
+    .menu-toggle {
+        display: block;
+    }
+
+    /* ロゴの調整（必要であれば） */
+    .logo img {
+        max-height: 35px; /* スマホで少し小さくする */
+    }
+
+    /* --- フッターの調整 --- */
+    footer {
+        padding: 15px 0; /* SPで上下のパディングを少し減らす */
+    }
+
+        footer p {
+            font-size: 12px; /* SPでフォントサイズを小さくする */
+            margin-bottom: 10px;
+        }
+
+    /* フッター内のリンクリストのレスポンシブ対応 */
+    .footer-links { /* ここを修正！ */
+        flex-direction: column; /* ★縦並びにする★ */
+        align-items: center; /* 縦並びにしたときに中央揃えにする */
+        /* marginやpaddingを調整する場合がある */
+        margin: 0 0 10px 0; /* 上下のマージンを調整 */
+    }
+
+        .footer-links li {
+            margin: 5px 0; /* ★縦並びなので左右のマージンを0に、上下を調整★ */
+            width: 100%; /* リンクが縦に伸びるように */
+            text-align: center; /* 各リンクのテキストを中央揃えに */
+        }
+
+        /* フッター内のリンクのスタイル (SP用) */
+        .footer-links a {
+            font-size: 12px; /* SPでリンクのフォントサイズを小さくする */
+            padding: 8px 10px; /* 上下左右のパディングを調整 */
+            line-height: normal;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* リンクの間に区切り線を追加する場合 */
+        }
+
+        .footer-links li:last-child a {
+            border-bottom: none; /* 最後の項目は下線なし */
+        }
+
+        /* フッターリンクのホバー時背景色をSPでも透明に */
+        .footer-links a:hover {
+            background-color: transparent;
+            color: #77CBFC; /* テキスト色変化は維持 */
+        }
+
+        /* フッターリンクの下線はSPでも表示する場合はここに設定 */
+        .footer-links a::after {
+            display: none; /*下線を表示しない*/
+        }
+
+        .footer-links a:hover::after {
+            transform: scale(1, 1);
+        }
+}
